@@ -1,0 +1,96 @@
+{% extends 'calorie_app/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="headline" style="font-family: 'Cormorant Garamond', serif;
+    font-family: 'Dancing Script', cursive;
+    font-family: 'Festive', cursive;
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Sorts Mill Goudy', serif; text-align: center;font-weight: bolder;font-size: 35px;">Your Profile </h1>
+        <div class="row mt-4 mb-4">
+            <div class="col-lg-5 card card-body" style="margin-left:15px;">
+            <div class="app-title">
+                
+                <h1 class="text-center profile-text mt-2" style="font-family: 'Cormorant Garamond', serif;
+                font-family: 'Dancing Script', cursive;
+                font-family: 'Festive', cursive;
+                font-family: 'Nanum Myeongjo', serif;
+                font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">Name: {{ request.user }} </h1>
+
+            </div>
+
+            <form method="POST" action="" class="login-form pt-4">
+              {% csrf_token %}
+                {% for field in form %}
+                <h1 style="font-size:25px;">Calorie Goal For Today</h1>
+                {{ field }}
+                {% endfor %}
+                <input class="btn login_btn profile-submit ml-3" type="submit" value="select">
+
+            </form>
+        </div>
+     
+        <div class="col-lg-6" style="margin-left:15px;">
+        <h1 class="text-center headline pb-2" style="font-family: 'Cormorant Garamond', serif;
+        font-family: 'Dancing Script', cursive;
+        font-family: 'Festive', cursive;
+        font-family: 'Nanum Myeongjo', serif;
+        font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">Records From Past Week</h1>
+        <table class="table text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Calorie Consumed</th>
+                    <th scope="col">Calorie Goal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.total_calorie }}</td>
+                    <td>{{ record.calorie_goal }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>  
+    </div>
+     
+   
+     </div>
+
+    <h1 class="text-center headline" style="font-family: 'Cormorant Garamond', serif;
+    font-family: 'Dancing Script', cursive;
+    font-family: 'Festive', cursive;
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Sorts Mill Goudy', serif; font-size: 25px;font-weight: bold;">All Food Items</h1>
+
+     <div class="row mt-5">
+      <table class="table text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Food Name</th>
+                    <th scope="col">Calories</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for food in food_items %}
+                <tr>
+                    <td>{{ food.name }}</td>
+                    <td>{{ food.calorie }}</td>
+                    <td>{{ food.quantity }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'update_food' food.id %}">Update</a></td>
+                    <td><a class="btn btn-sm " href="{% url 'delete_food' food.id %}">Delete</a></td>
+
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>  
+    </div>
+</div>
+{% endblock content %}

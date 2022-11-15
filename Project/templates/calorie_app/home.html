@@ -1,0 +1,82 @@
+{% extends 'calorie_app/base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 item " >
+      <div class="card item-card card-block" style="position: relative;left:100px;width: 350px;">
+        <h5 class="card-title mt-3 mb-3 text-center" style="font-family: 'Cormorant Garamond', serif;
+        font-family: 'Dancing Script', cursive;
+        font-family: 'Festive', cursive;
+        font-family: 'Nanum Myeongjo', serif;
+        font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">Total Calories Consumed Today</h5>
+        <p class="card-text text-center">{{ total_calorie }}</p> 
+    </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 item" >
+      <div class="card item-card card-block mt-sm-2 mt-lg-0" style="position: relative;left:100px;width: 350px;">
+        <h5 class="card-title  mt-3 mb-3 text-center" style="font-family: 'Cormorant Garamond', serif;
+        font-family: 'Dancing Script', cursive;
+        font-family: 'Festive', cursive;
+        font-family: 'Nanum Myeongjo', serif;
+        font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">Calorie Goal For Today</h5>
+        <p class="card-text text-center">{{ calorie_goal }}</p> 
+  </div>
+    </div>
+  </div>
+  
+</div>
+  
+      <div class="card text-white text-center mt-3"  style="border-radius: 10px;width: 350px;float:center;position: relative;left:500px;">
+
+        <div class="card-body">
+          
+          <p class="card-text text-center pt-3" style="font-family: 'Cormorant Garamond', serif;
+          font-family: 'Dancing Script', cursive;
+          font-family: 'Festive', cursive;
+          font-family: 'Nanum Myeongjo', serif;
+          font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;"> 
+          {% if calorie_goal_status > 0 %}
+      You need  {{ calorie_goal_status }} calories more to reach your goal 
+      {% elif calorie_goal == 0 %}
+      <a href="{% url 'profile' %}"> Enter your calorie goal for the day </a>
+      {% else %}
+      You surpassed your goal by {{ over_calorie }} calories 
+      {% endif %} </p>
+
+        </div>
+
+      </div>
+
+<h1 class="headline text-center mt-auto mb-auto" style="font-family: 'Cormorant Garamond', serif;
+font-family: 'Dancing Script', cursive;
+font-family: 'Festive', cursive;
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">All Food Consumed Today </h1>
+<div class="container table-responsive py-5"> 
+<table class="table table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr class="text-center">
+      <th scope="col">Food</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody>
+ 
+  
+    {% for food in food_selected_today %}
+    <tr class="text-center">
+      <td> {{ food.food.name }}</td>
+      <td> {{ food.calorie_amount }}</td>
+      <td> {{ food.amount }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+{% endblock content %}

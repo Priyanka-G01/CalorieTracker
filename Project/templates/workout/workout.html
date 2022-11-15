@@ -1,0 +1,75 @@
+
+{% extends 'bmi/base.html' %}
+{% load static %}
+{% block content %}
+<h3 style="text-align: center; padding: 25px; font-family: 'Cormorant Garamond', serif;
+font-family: 'Dancing Script', cursive;
+font-family: 'Festive', cursive;
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Sorts Mill Goudy', serif; font-size: 25px; font-weight: bold;">Calories Lost</h3>
+
+<div class="container">
+    <div class="form-row">
+      <!-#########################Col1###############-->
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="tab-bmi">
+         
+         <div class="tab-content">
+         
+             <form method="POST">
+               {% csrf_token %}
+               <div class="col-12">
+                <label class="col-md-6">
+                    <b>Select Workout To Add </b>
+                </label>
+                <select class="col-md-6 form-control" name="workout-details" id="workout-details">
+                    {% for workout in workouts %}
+                    <option value="{{workout.name}}" type="submit">{{workout.name}}</option>
+                    {% endfor %}
+                </select>
+               
+               </div>
+               <div class="col-12">
+                <label for="">Weight: </label>
+                <input type="text" name="weight" class="form-control" required placeholder="m">
+              </div>
+               <div class="col-12">
+                 <label for="">Duration: </label>
+                 <input type="text" name="duration" class="form-control" required placeholder="m">
+               </div>
+               {% if request.user.is_authenticated %}
+               <div class="form-check my-5">
+                 <input class="form-check-input" checked="checked" name="save" value="on" type="checkbox">
+                 <label for="" class="form-check-label">Save It.
+                   <a href="#" title="Why to save it?" data-toggle="popover" data-trigger="focus"
+           data-content="In case you want to track your weight, you can save it.(login required)">?</a>
+         </label>
+               </div>
+               {% else %}
+               <div class="form-check my-5">
+                 <input disabled class="form-check-input" checked="checked" name="save" value="on" type="checkbox">
+                 <label for="" class="form-check-label">Save It.
+                   <a href="#" title="Why to save it?" data-toggle="popover" data-trigger="focus"
+           data-content="In case you want to track your weight, you can save it.(login required)">?</a>
+         </label>
+               </div>
+               {% endif %}
+  
+               <button type="submit" class="btn btn-primary" action="{% url 'workout' %}">Calculate</button>
+  
+             </form>
+          </div>
+  </div>
+
+             
+          </div>
+          <div class="col-md-6 col-sm-12 col-xs-12">
+          <h2 style="text-align: center;">Result</h2>
+          <div style="text-align: center;">Calories Lost = <span style="font-weight: bold;">{{total}}</span> cal</div>
+  
+        </div>
+  
+  
+      
+  
+  {% endblock content %}
